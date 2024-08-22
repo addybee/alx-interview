@@ -21,8 +21,9 @@ def validUTF8(data: List[int]) -> bool:
     # to see if it is 0
     # store the bitwise operation on each item that yield truth in result
     result = [
-        (item & 128) == 0 for item in data if item <= 128
+        item for item in data if (item >> 7) == 0
     ]
+
     # compare the length of the data and result to see if they are equal:
     # if they are not it means some of the integer are not valid utf-8 encoding
     # but if they are equal it means they are all valid utf-8 character
