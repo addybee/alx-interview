@@ -17,13 +17,34 @@ from typing import List
 
 def validUTF8(data: List[int]) -> bool:
     """checks if a or set of data is a valid UTF-8 encoding"""
-    # perform a bitwise and on each item in data (item & 128 == 0)
-    # to see if it is 0
-    # store the bitwise operation on each item that yield truth in result
-    result = [
-        (item >> 7) == 0 for item in data
-    ]
+    n_bytes = 0
 
-    if False in result:
-        return False
-    return True
+    # Masks to check the leading bits of a byte
+    mask1 = 1 << 7    # 10000000
+    mask2 = 1 << 6    # 01000000
+
+    for num in data:
+        mask = 1 << 7
+        if n_bytes == 0:
+            # Count the number of leading 1s in the first byte
+            while mask & num:
+                n_bytes += 1
+                mask = mask >> 1
+
+            # If no leading 1s, it means it's a 1-byte character (0xxxxxxx)
+            if n_bytes == 0:
+                continue
+
+            # For UTF-8, a character must be 1 to 4 bytes long
+            if n_bytes == 1 or n_bytes > 4:
+                return False
+        else:
+            # For subsequent bytes, they must match the pattern 10xxxxxx
+            if not (num & mask1 and not (num & mask2)):
+                return False
+
+        # Decrement the number of bytes left to process in the current character
+        n_bytes -= 1
+
+    # All characters should be fully processed
+    return n_bytes == 0
