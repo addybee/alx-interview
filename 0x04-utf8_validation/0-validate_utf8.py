@@ -15,28 +15,28 @@ the 8 least significant bits of each integer
 from typing import List
 
 
-def validUTF8(data: List[int]) -> bool:
-    """checks if a or set of data is a valid UTF-8 encoding"""
-    n_bytes = 0
+def valid_utf8(data: List[int]) -> bool:
+    """Check if a set of data is a valid UTF-8 encoding."""
+    num_bytes = 0
 
     # Masks to check the leading bits of a byte
     mask1 = 1 << 7    # 10000000
-    mask2 = 1 << 6    # 01000000
+    mask2 = mask1 >> 1    # 01000000
 
     for num in data:
         mask = 1 << 7
-        if n_bytes == 0:
+        if num_bytes == 0:
             # Count the number of leading 1s in the first byte
             while mask & num:
-                n_bytes += 1
+                num_bytes += 1
                 mask = mask >> 1
 
             # If no leading 1s, it means it's a 1-byte character (0xxxxxxx)
-            if n_bytes == 0:
+            if num_bytes == 0:
                 continue
 
             # For UTF-8, a character must be 1 to 4 bytes long
-            if n_bytes == 1 or n_bytes > 4:
+            if num_bytes == 1 or num_bytes > 4:
                 return False
         else:
             # For subsequent bytes, they must match the pattern 10xxxxxx
@@ -44,7 +44,7 @@ def validUTF8(data: List[int]) -> bool:
                 return False
 
         # Decrement number of bytes left to process in the current character
-        n_bytes -= 1
+        num_bytes -= 1
 
     # All characters should be fully processed
-    return n_bytes == 0
+    return num_bytes == 0
