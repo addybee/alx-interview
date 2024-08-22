@@ -15,7 +15,7 @@ the 8 least significant bits of each integer
 from typing import List
 
 
-def valid_utf8(data: List[int]) -> bool:
+def validUTF8(data: List[int]) -> bool:
     """Check if a set of data is a valid UTF-8 encoding."""
     num_bytes = 0
 
