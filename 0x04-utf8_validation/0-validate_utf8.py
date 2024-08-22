@@ -43,7 +43,7 @@ def validUTF8(data: List[int]) -> bool:
             if not (num & mask1 and not (num & mask2)):
                 return False
 
-        # Decrement the number of bytes left to process in the current character
+        # Decrement number of bytes left to process in the current character
         n_bytes -= 1
 
     # All characters should be fully processed
