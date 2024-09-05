@@ -3,7 +3,7 @@ const request = require('request');
 const movieId = process.argv[2];
 const movieUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
-function requestPromise(url) {
+function requestPromise (url) {
   return new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
       if (error) return reject(error);
@@ -13,7 +13,7 @@ function requestPromise(url) {
   });
 }
 
-function callback(error, resp, body) {
+function callback (error, resp, body) {
   if (error) {
     console.error('Error:', error);
     return;
