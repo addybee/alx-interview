@@ -34,7 +34,7 @@ def makeChange(coins, total):
     """ Coin Change – Minimum Coins to Make total """
     if total == 0:
         return 0
-    dp = [-1] * (sum + 1)
+    dp = [-1] * (total + 1)
     coins_size = len(coins)
     ans = makeChangeUtil(coins, coins_size, total, dp)
     if ans == sys.maxsize:
