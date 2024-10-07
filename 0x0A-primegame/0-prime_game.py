@@ -50,7 +50,7 @@ def isWinner(x, nums):
     - str: The name of the player who won the most rounds. If the winner
     cannot be determined, return None
     """
-    if not x or not nums or not len(nums):
+    if not x or x < 1 or not nums or not len(nums):
         return None
 
     player_wins = {
